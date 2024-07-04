@@ -4,6 +4,8 @@ import { type FC, useEffect, useMemo } from 'react';
 
 import { App } from '@/components/App.tsx';
 import { ErrorBoundary } from '@/components/ErrorBoundary.tsx';
+import { Provider } from 'react-redux';
+import { store } from '@/store/store';
 
 const ErrorBoundaryError: FC<{ error: unknown }> = ({ error }) => (
   <div>
@@ -36,7 +38,9 @@ const Inner: FC = () => {
   return (
     <TonConnectUIProvider manifestUrl={manifestUrl}>
       <SDKProvider acceptCustomStyles debug={debug}>
-        <App/>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </SDKProvider>
     </TonConnectUIProvider>
   );
@@ -44,6 +48,6 @@ const Inner: FC = () => {
 
 export const Root: FC = () => (
   <ErrorBoundary fallback={ErrorBoundaryError}>
-    <Inner/>
+    <Inner />
   </ErrorBoundary>
 );
